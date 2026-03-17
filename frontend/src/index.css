@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        background-color: #F8FAFC;
+        /* Clean, slightly cool background like Stripe/Linear */
+        color: #0F172A;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        /* Create a subtle noisy background texture common in high-end sites */
+        background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+}
+
+@layer utilities {
+    .glass-panel {
+        @apply bg-white/70 backdrop-blur-2xl border border-white shadow-soft;
+    }
+
+    .glass-card {
+        @apply bg-white/60 backdrop-blur-xl border border-white/80 shadow-glass hover:shadow-glass-hover hover:-translate-y-1 transition-all duration-500 ease-out;
+    }
+
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-indigo-500 to-accent;
+    }
+
+    .text-gradient-subtle {
+        @apply bg-clip-text text-transparent bg-gradient-to-br from-slate-700 to-slate-900;
+    }
+
+    .btn-primary {
+        @apply relative inline-flex items-center justify-center px-6 py-2.5 overflow-hidden font-medium text-white bg-primary rounded-full shadow-lg border border-primary-hover hover:bg-primary-hover hover:shadow-neon transition-all duration-300 active:scale-95;
+    }
+
+    .btn-outline {
+        @apply relative inline-flex items-center justify-center px-6 py-2.5 font-medium text-slate-700 bg-white/50 border border-slate-200 rounded-full hover:bg-white hover:text-primary hover:border-primary/50 hover:shadow-md transition-all duration-300 active:scale-95 backdrop-blur-sm;
+    }
+
+    .input-field {
+        @apply w-full bg-white/50 border border-slate-200 rounded-2xl p-4 text-slate-800 placeholder-slate-400 outline-none focus:ring-4 focus:ring-primary/10 focus:border-primary focus:bg-white transition-all duration-300 shadow-inner;
+    }
+
+    .stagger-1 {
+        animation-delay: 100ms;
+    }
+
+    .stagger-2 {
+        animation-delay: 200ms;
+    }
+
+    .stagger-3 {
+        animation-delay: 300ms;
+    }
+
+    .stagger-4 {
+        animation-delay: 400ms;
+    }
+}
+
+/* Minimalist Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}

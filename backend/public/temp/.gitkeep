@@ -1,0 +1,2 @@
+# This file ensures git tracks the otherwise-empty temp folder.
+# Files uploaded temporarily by Multer will appear here and are auto-deleted after Cloudinary upload.
