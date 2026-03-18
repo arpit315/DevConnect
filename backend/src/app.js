@@ -43,11 +43,13 @@ app.use(cookieParser());
 import userRouter from "./routes/user.routes.js";
 import postRouter from "./routes/post.routes.js";
 import messageRouter from "./routes/message.routes.js";
+import projectRouter from "./routes/project.routes.js";
 
 // Route declarations
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/messages", messageRouter);
+app.use("/api/v1/projects", projectRouter);
 
 app.get("/api/health", (req, res) => {
     res.status(200).json({ status: "ok", message: "DevConnect API is running!" });
@@ -56,13 +58,28 @@ app.get("/api/health", (req, res) => {
 // 5. Global Error Handling Middleware
 // To return custom ApiError instances as clean JSON instead of HTML stack traces
 app.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
+    let statusCode = err.statusCode || 500;
+    let message = err.message || "Internal Server Error";
+
+    // Handle Mongoose Duplicate Key Error (code 11000)
+    // For example, when a user tries to use an email that already exists.
+    if (err.code === 11000) {
+        statusCode = 400;
+        const field = Object.keys(err.keyValue || {})[0];
+        message = field ? `${field.charAt(0).toUpperCase() + field.slice(1)} already exists` : "Duplicate field value entered";
+    }
+
+    // Handle Mongoose Validation Errors
+    if (err.name === "ValidationError") {
+        statusCode = 400;
+        message = Object.values(err.errors).map(val => val.message).join(", ");
+    }
 
     return res.status(statusCode).json({
         success: false,
         message: message,
         errors: err.errors || [],
+        stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
     });
 });
 

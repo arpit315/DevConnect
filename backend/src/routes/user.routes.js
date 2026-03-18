@@ -9,6 +9,7 @@ import {
     updateAccountDetails,
     updateUserAvatar,
     getAllUsers,
+    toggleFollowUser,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -31,5 +32,7 @@ router.route("/update-details").patch(verifyJWT, updateAccountDetails);
 
 // upload.single("avatar") tells Multer to look for a file in the "avatar" field of the form
 router.route("/update-avatar").patch(verifyJWT, upload.single("avatar"), updateUserAvatar);
+
+router.route("/follow/:userId").post(verifyJWT, toggleFollowUser);
 
 export default router;

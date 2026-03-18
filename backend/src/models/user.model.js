@@ -12,6 +12,7 @@ const userSchema = new Schema(
             trim: true,
             index: true,
         },
+
         email: {
             type: String,
             required: true,
@@ -39,6 +40,38 @@ const userSchema = new Schema(
         refreshToken: {
             type: String,
         },
+        bio: {
+            type: String,
+            default: "",
+        },
+        github: {
+            type: String,
+            default: "",
+        },
+        linkedin: {
+            type: String,
+            default: "",
+        },
+        twitter: {
+            type: String,
+            default: "",
+        },
+        techStack: {
+            type: [String],
+            default: [],
+        },
+        followers: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
+        following: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: "User"
+            }
+        ],
     },
     {
         timestamps: true,

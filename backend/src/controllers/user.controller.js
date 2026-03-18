@@ -173,22 +173,31 @@ const getUserProfile = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, user, "User profile fetched successfully"));
 });
 
-// Lets the logged-in user update their fullName and/or email.
+// Lets the logged-in user update their fullName, bio, email, techStack, and social links.
 const updateAccountDetails = asyncHandler(async (req, res) => {
-    const { fullName, email } = req.body;
-
-    if (!fullName && !email) {
-        throw new ApiError(400, "At least one field (fullName or email) is required");
-    }
-
     const updateFields = {};
-    if (fullName) updateFields.fullName = fullName;
-    if (email) updateFields.email = email;
+    const fields = ['fullName', 'email', 'bio', 'github', 'linkedin', 'twitter'];
+    fields.forEach(f => {
+        if (req.body[f] !== undefined) {
+            updateFields[f] = req.body[f];
+        }
+    });
+
+    if (techStack !== undefined) {
+        if (typeof techStack === 'string') {
+            updateFields.techStack = techStack.split(',').map(s => s.trim()).filter(Boolean);
+        } else if (Array.isArray(techStack)) {
+            updateFields.techStack = techStack;
+        }
+    }
 
     const user = await User.findByIdAndUpdate(
         req.user?._id,
         { $set: updateFields },
-        { new: true }
+        {
+            new: true,
+            runValidators: true // This will catch if fullName is empty
+        }
     ).select("-password -refreshToken");
 
     return res
@@ -206,15 +215,18 @@ const updateUserAvatar = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Avatar file is missing");
     }
 
+    // This utility uploads the file to Cloudinary
     const avatar = await uploadOnCloudinary(avatarLocalPath);
 
-    if (!avatar?.url) {
+    const imageUrl = avatar?.secure_url || avatar?.url;
+
+    if (!imageUrl) {
         throw new ApiError(400, "Error while uploading avatar");
     }
 
     const user = await User.findByIdAndUpdate(
         req.user?._id,
-        { $set: { avatar: avatar.url } },
+        { $set: { avatar: imageUrl } },
         { new: true }
     ).select("-password -refreshToken");
 
@@ -234,6 +246,43 @@ const getAllUsers = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, users, "Users fetched successfully"));
 });
 
+// Lets a user follow or unfollow another user
+const toggleFollowUser = asyncHandler(async (req, res) => {
+    const { userId } = req.params;
+    const currentUserId = req.user._id;
+
+    if (userId === currentUserId.toString()) {
+        throw new ApiError(400, "You cannot follow yourself");
+    }
+
+    const targetUser = await User.findById(userId);
+    if (!targetUser) {
+        throw new ApiError(404, "Target user not found");
+    }
+
+    const isFollowing = targetUser.followers.includes(currentUserId);
+
+    if (isFollowing) {
+        // Unfollow
+        await User.findByIdAndUpdate(userId, {
+            $pull: { followers: currentUserId }
+        });
+        await User.findByIdAndUpdate(currentUserId, {
+            $pull: { following: userId }
+        });
+        return res.status(200).json(new ApiResponse(200, { isFollowing: false }, "Unfollowed successfully"));
+    } else {
+        // Follow
+        await User.findByIdAndUpdate(userId, {
+            $push: { followers: currentUserId }
+        });
+        await User.findByIdAndUpdate(currentUserId, {
+            $push: { following: userId }
+        });
+        return res.status(200).json(new ApiResponse(200, { isFollowing: true }, "Followed successfully"));
+    }
+});
+
 export {
     registerUser,
     loginUser,
@@ -244,4 +293,5 @@ export {
     updateAccountDetails,
     updateUserAvatar,
     getAllUsers,
+    toggleFollowUser,
 };

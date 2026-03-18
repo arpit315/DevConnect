@@ -14,14 +14,21 @@ const createPost = asyncHandler(async (req, res) => {
         throw new ApiError(400, "Post content is required");
     }
 
-    // Handle optional image upload
-    let imageUrl = "";
-    if (req.file?.path) {
-        const uploaded = await uploadOnCloudinary(req.file.path);
-        if (!uploaded?.url) {
-            throw new ApiError(500, "Failed to upload image");
+    // Handle optional multiple image uploads
+    let imageUrls = [];
+    if (req.files && req.files.length > 0) {
+        // Upload all files to Cloudinary in parallel
+        const uploadPromises = req.files.map(file => uploadOnCloudinary(file.path));
+        const results = await Promise.all(uploadPromises);
+
+        // Filter out any failed uploads and extract URLs
+        imageUrls = results
+            .filter(res => res && (res.secure_url || res.url))
+            .map(res => res.secure_url || res.url);
+
+        if (imageUrls.length === 0 && req.files.length > 0) {
+            throw new ApiError(500, "Failed to upload images to Cloudinary");
         }
-        imageUrl = uploaded.url;
     }
 
     // Parse tags — frontend can send "javascript,react,nodejs" or ["javascript","react"]
@@ -31,7 +38,7 @@ const createPost = asyncHandler(async (req, res) => {
 
     const post = await Post.create({
         content,
-        image: imageUrl || undefined,
+        images: imageUrls,
         author: req.user._id,
         tags: parsedTags,
     });

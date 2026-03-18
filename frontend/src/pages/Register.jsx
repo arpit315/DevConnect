@@ -51,10 +51,10 @@ const Register = () => {
                 <Link to="/" className="inline-flex items-center justify-center p-3 bg-gradient-to-tr from-accent to-primary rounded-2xl mb-6 shadow-xl shadow-accent/20 hover:scale-105 transition-transform duration-300">
                     <FiBriefcase className="w-8 h-8 text-white" />
                 </Link>
-                <h2 className="text-3xl font-extrabold text-secondary tracking-tight">
+                <h2 className="text-3xl font-extrabold text-white tracking-tight">
                     Join DevConnect
                 </h2>
-                <p className="mt-3 text-slate-500 font-medium tracking-wide">
+                <p className="mt-3 text-slate-400 font-medium tracking-wide">
                     Already an awesome member?{' '}
                     <Link to="/login" className="font-bold text-accent hover:text-primary transition-colors">
                         Sign in here
@@ -66,7 +66,7 @@ const Register = () => {
                 <div className="glass-card py-8 px-8 sm:px-10 shadow-2xl rounded-[2.5rem]">
                     <form className="space-y-4" onSubmit={handleSubmit}>
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 tracking-wide">Full Name</label>
+                            <label className="block text-sm font-bold text-slate-200 mb-1.5 tracking-wide">Full Name</label>
                             <input
                                 name="fullName"
                                 type="text"
@@ -74,12 +74,12 @@ const Register = () => {
                                 value={formData.fullName}
                                 onChange={handleChange}
                                 className="input-field py-3"
-                                placeholder="e.g. John Doe"
+                                placeholder=""
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 tracking-wide">Username</label>
+                            <label className="block text-sm font-bold text-slate-200 mb-1.5 tracking-wide">Username</label>
                             <input
                                 name="username"
                                 type="text"
@@ -87,12 +87,12 @@ const Register = () => {
                                 value={formData.username}
                                 onChange={handleChange}
                                 className="input-field py-3"
-                                placeholder="e.g. coder_john"
+                                placeholder=""
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 tracking-wide">Email address</label>
+                            <label className="block text-sm font-bold text-slate-200 mb-1.5 tracking-wide">Email address</label>
                             <input
                                 name="email"
                                 type="email"
@@ -100,12 +100,12 @@ const Register = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                                 className="input-field py-3"
-                                placeholder="john@example.com"
+                                placeholder=""
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-1.5 tracking-wide">Password</label>
+                            <label className="block text-sm font-bold text-slate-200 mb-1.5 tracking-wide">Password</label>
                             <input
                                 name="password"
                                 type="password"

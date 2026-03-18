@@ -16,9 +16,10 @@ const postSchema = new Schema(
             maxlength: [2000, "Post cannot exceed 2000 characters"],
         },
 
-        // Optional image attached to the post (Cloudinary URL)
-        image: {
-            type: String,
+        // Optional multiple images attached to the post (Array of Cloudinary URLs)
+        images: {
+            type: [String],
+            default: [],
         },
 
         // The user who created this post

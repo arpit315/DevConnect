@@ -13,8 +13,8 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 glass-panel z-50 border-b border-white/40">
-            <div className="max-w-7xl mx-auto px-6 sm:px-8">
+        <nav className="fixed top-0 left-0 right-0 glass-panel z-50">
+            <div className="w-full px-6 md:px-12">
                 <div className="flex justify-between items-center h-[72px]">
                     {/* Logo Area */}
                     <div className="flex items-center">
@@ -23,7 +23,7 @@ const Navbar = () => {
                                 <FiBriefcase className="w-5 h-5 text-white" />
                                 <div className="absolute inset-0 bg-white/20 rounded-[14px] opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             </div>
-                            <span className="text-[22px] font-extrabold tracking-tight text-secondary group-hover:text-primary transition-colors">
+                            <span className="text-[22px] font-extrabold tracking-tight text-secondary dark:text-white group-hover:text-primary transition-colors">
                                 DevConnect
                             </span>
                         </Link>
@@ -37,7 +37,7 @@ const Navbar = () => {
                         <input
                             type="text"
                             placeholder="Search developers, projects, or tags..."
-                            className="w-full bg-slate-100/50 hover:bg-slate-100 border border-transparent focus:bg-white focus:border-primary/30 rounded-full py-2.5 pl-10 pr-4 text-sm text-slate-700 outline-none transition-all duration-300 placeholder-slate-400 shadow-inner group-focus-within:shadow-md"
+                            className="w-full bg-slate-100/50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border border-transparent dark:border-white/10 focus:bg-white dark:focus:bg-white/10 focus:border-primary/30 dark:focus:border-primary/50 rounded-full py-2.5 pl-10 pr-4 text-sm text-slate-700 dark:text-white outline-none transition-all duration-300 placeholder-slate-400 shadow-inner group-focus-within:shadow-md"
                         />
                     </div>
 

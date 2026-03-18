@@ -40,10 +40,10 @@ const Login = () => {
                 <Link to="/" className="inline-flex items-center justify-center p-3 bg-gradient-to-br from-primary to-accent rounded-2xl mb-6 shadow-xl shadow-primary/20 hover:scale-105 transition-transform duration-300">
                     <FiBriefcase className="w-8 h-8 text-white" />
                 </Link>
-                <h2 className="text-3xl font-extrabold text-secondary tracking-tight">
+                <h2 className="text-3xl font-extrabold text-white tracking-tight">
                     Welcome back
                 </h2>
-                <p className="mt-3 text-slate-500 font-medium tracking-wide">
+                <p className="mt-3 text-slate-400 font-medium tracking-wide">
                     New to DevConnect?{' '}
                     <Link to="/register" className="font-bold text-primary hover:text-primary-hover transition-colors">
                         Create an account
@@ -55,7 +55,7 @@ const Login = () => {
                 <div className="glass-card py-10 px-8 shadow-2xl rounded-[2.5rem]">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <div>
-                            <label className="block text-sm font-bold text-slate-700 mb-2 tracking-wide">
+                            <label className="block text-sm font-bold text-slate-200 mb-2 tracking-wide">
                                 Username or Email
                             </label>
                             <input
@@ -65,13 +65,13 @@ const Login = () => {
                                 value={formData.username}
                                 onChange={handleChange}
                                 className="input-field"
-                                placeholder="e.g. johndoe or email@example.com"
+                                placeholder=""
                             />
                         </div>
 
                         <div>
                             <div className="flex items-center justify-between mb-2">
-                                <label className="block text-sm font-bold text-slate-700 tracking-wide">
+                                <label className="block text-sm font-bold text-slate-200 tracking-wide">
                                     Password
                                 </label>
                                 <a href="#" className="text-sm font-semibold text-primary hover:text-primary-hover transition-colors">
@@ -85,7 +85,7 @@ const Login = () => {
                                 value={formData.password}
                                 onChange={handleChange}
                                 className="input-field"
-                                placeholder="••••••••"
+                                placeholder=""
                             />
                         </div>
 
@@ -109,7 +109,7 @@ const Login = () => {
                 </div>
 
                 <p className="mt-8 text-center text-xs text-slate-400 font-medium px-10">
-                    By continuing, you agree to DevConnect's <a href="#" className="underline hover:text-slate-500">Terms of Service</a> and <a href="#" className="underline hover:text-slate-500">Privacy Policy</a>.
+                    By continuing, you agree to DevConnect's <a href="#" className="underline hover:text-slate-400">Terms of Service</a> and <a href="#" className="underline hover:text-slate-400">Privacy Policy</a>.
                 </p>
             </div>
         </div>

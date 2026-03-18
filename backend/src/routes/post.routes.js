@@ -18,8 +18,8 @@ router.route("/:postId").get(getPostById);
 router.route("/user/:username").get(getUserPosts);
 
 // ── SECURED ROUTES (login required) ──────────────────────────────────────────
-// upload.single("image") → Multer accepts an optional image file in the "image" form field
-router.route("/").post(verifyJWT, upload.single("image"), createPost);
+// upload.array("images", 4) → Multer accepts up to 4 image files in the "images" form field
+router.route("/").post(verifyJWT, upload.array("images", 4), createPost);
 router.route("/:postId").delete(verifyJWT, deletePost);
 router.route("/:postId/like").post(verifyJWT, toggleLike);
 

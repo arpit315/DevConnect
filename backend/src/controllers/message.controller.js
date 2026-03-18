@@ -82,6 +82,8 @@ const getMessages = asyncHandler(async (req, res) => {
         // If they haven't chatted before, just return an empty array
         return res.status(200).json(new ApiResponse(200, [], "No messages yet"));
     }
+    
+
 
     const messages = conversation.messages;
 
