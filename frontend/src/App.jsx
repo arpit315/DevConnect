@@ -69,7 +69,7 @@ const AppContent = () => {
         </div>
     );
 };
-console.log("vercel test update");
+console.log("vercel test update")
 const App = () => {
     const { user, fetchCurrentUser } = useAuthStore();
     const { fetchNotifications, subscribeToNotifications, unsubscribeFromNotifications } = useNotificationStore();
