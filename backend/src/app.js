@@ -4,13 +4,24 @@ import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import { ApiResponse } from "./utils/ApiResponse.js";
 const app = express();
-app.use(helmet());
 app.use(
     cors({
-        origin: process.env.CORS_ORIGIN,
-        credentials: true, 
+        origin: function (origin, callback) {
+            if (!origin) return callback(null, true);
+            if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
+                return callback(null, true);
+            }
+            if (process.env.CORS_ORIGIN && origin === process.env.CORS_ORIGIN) {
+                return callback(null, true);
+            }
+            callback(new Error('Not allowed by CORS'));
+        },
+        credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+        allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
     })
 );
+app.use(helmet());
 app.use(express.json({ limit: "16kb" })); 
 app.use(express.urlencoded({ extended: true, limit: "16kb" })); 
 app.use(cookieParser());
