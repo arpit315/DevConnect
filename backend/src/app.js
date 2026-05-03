@@ -30,6 +30,7 @@ app.get("/api/health", (req, res) => {
 app.use((err, req, res, next) => {
     let statusCode = err.statusCode || 500;
     let message = err.message || "Internal Server Error";
+    console.error("API Error:", err);
     if (err.code === 11000) {
         statusCode = 400;
         const field = Object.keys(err.keyValue || {})[0];
