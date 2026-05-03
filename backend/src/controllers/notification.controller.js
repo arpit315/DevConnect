@@ -8,6 +8,7 @@ const getNotifications = asyncHandler(async (req, res) => {
         .populate("sender", "username fullName avatar")
         .populate("post", "content");
 
+        
     return res
         .status(200)
         .json(new ApiResponse(200, notifications, "Notifications fetched successfully"));
