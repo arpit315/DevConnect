@@ -63,7 +63,11 @@ const loginUser = asyncHandler(async (req, res) => {
     }
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(user._id);
     const loggedInUser = await User.findById(user._id).select("-password -refreshToken");
-    const options = { httpOnly: true, secure: true , sameSite: "None"};
+    const options = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    };
     return res
         .status(200)
         .cookie("accessToken", accessToken, options)
@@ -82,7 +86,11 @@ const logoutUser = asyncHandler(async (req, res) => {
         { $unset: { refreshToken: 1 } },
         { new: true }
     );
-    const options = { httpOnly: true, secure: true };
+    const options = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    };
     return res
         .status(200)
         .clearCookie("accessToken", options)
@@ -99,7 +107,11 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     if (!user || incomingRefreshToken !== user?.refreshToken) {
         throw new ApiError(401, "Refresh token is expired or used");
     }
-    const options = { httpOnly: true, secure: true };
+    const options = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None"
+    };
     const { accessToken, refreshToken: newRefreshToken } = await generateAccessAndRefreshTokens(user._id);
     return res
         .status(200)

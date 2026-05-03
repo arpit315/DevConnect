@@ -2,12 +2,12 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import { ApiResponse } from "./utils/ApiResponse.js";
 const app = express();
 app.use(helmet());
 app.use(
     cors({
-        origin: dev-connect-ruby.vercel.app,
-
+        origin: process.env.CORS_ORIGIN,
         credentials: true, 
     })
 );
